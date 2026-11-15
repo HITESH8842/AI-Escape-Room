@@ -1,0 +1,206 @@
+{
+  "title": "The Forgotten Library",
+  "intro": "You wake up on a cold wooden floor. Dusty shelves tower around you and the only exit is a heavy oak door with a four-digit keypad. Somewhere in this library is the way out.",
+  "objects": {
+    "desk": {
+      "name": "writing desk",
+      "aliases": [
+        "desk",
+        "writing desk",
+        "table"
+      ],
+      "visible": true,
+      "description": "An old oak writing desk. A leather journal and a brass magnifying glass lie on top of it.",
+      "reveals_on_examine": [
+        "journal",
+        "magnifying_glass"
+      ]
+    },
+    "journal": {
+      "name": "leather journal",
+      "aliases": [
+        "journal",
+        "leather journal",
+        "diary",
+        "notebook"
+      ],
+      "visible": false,
+      "description": "The librarian's journal. One page reads: 'Three red books guard my drawer - read them left to right.' Another page reads: 'The clock stopped the night I left. Its face remembers the end of the way out.'",
+      "clue_on_examine": "journal_hints"
+    },
+    "magnifying_glass": {
+      "name": "magnifying glass",
+      "aliases": [
+        "magnifying glass",
+        "magnifier",
+        "glass",
+        "lens"
+      ],
+      "visible": false,
+      "takeable": true,
+      "description": "A brass magnifying glass. Useful for reading very small text."
+    },
+    "bookshelf": {
+      "name": "bookshelf",
+      "aliases": [
+        "bookshelf",
+        "shelf",
+        "shelves",
+        "bookcase",
+        "books"
+      ],
+      "visible": true,
+      "description": "A tall bookshelf full of grey, dusty books. Three bright red books stand out on the middle shelf.",
+      "reveals_on_examine": [
+        "red_books"
+      ]
+    },
+    "red_books": {
+      "name": "three red books",
+      "aliases": [
+        "red books",
+        "red book",
+        "three red books",
+        "three books"
+      ],
+      "visible": false,
+      "description": "Each red book has a single number handwritten on its first page. From left to right they read: 4, 7, 2.",
+      "clue_on_examine": "drawer_code"
+    },
+    "drawer": {
+      "name": "locked drawer",
+      "aliases": [
+        "drawer",
+        "locked drawer",
+        "desk drawer"
+      ],
+      "visible": true,
+      "description": "A drawer built into the side of the desk, secured with a three-digit combination lock.",
+      "opened_description": "The drawer is open and empty now.",
+      "lock": {
+        "type": "code",
+        "code": "472",
+        "puzzle": "drawer_puzzle",
+        "reveals": [
+          "brass_key",
+          "torn_note"
+        ],
+        "success_text": "The lock clicks and the drawer slides open. Inside are a small brass key and a torn note.",
+        "revealed_by_clues": [
+          "drawer_code"
+        ]
+      }
+    },
+    "brass_key": {
+      "name": "brass key",
+      "aliases": [
+        "brass key",
+        "key",
+        "small key"
+      ],
+      "visible": false,
+      "takeable": true,
+      "description": "A small brass key with an ornate handle. It looks like it belongs to a picture frame lock."
+    },
+    "torn_note": {
+      "name": "torn note",
+      "aliases": [
+        "torn note",
+        "note",
+        "paper"
+      ],
+      "visible": false,
+      "takeable": true,
+      "description": "The note says: 'The beginning of the way out hides behind my portrait.'",
+      "clue_on_examine": "note_hint"
+    },
+    "painting": {
+      "name": "portrait",
+      "aliases": [
+        "painting",
+        "portrait",
+        "picture",
+        "frame"
+      ],
+      "visible": true,
+      "description": "A portrait of a stern old librarian. The frame is hinged to the wall and has a tiny brass keyhole.",
+      "opened_description": "The portrait hangs open on its hinges. The digits 5 and 8 are scratched into the wall behind it.",
+      "lock": {
+        "type": "item",
+        "item": "brass_key",
+        "puzzle": "painting_puzzle",
+        "clue": "door_first_half",
+        "success_text": "The brass key turns and the portrait swings open like a door. Scratched into the stone behind it are the digits 5 and 8."
+      }
+    },
+    "clock": {
+      "name": "grandfather clock",
+      "aliases": [
+        "clock",
+        "grandfather clock",
+        "clock face"
+      ],
+      "visible": true,
+      "description": "A tall grandfather clock, stopped long ago. Something is engraved on its face but the letters are far too small to read with the naked eye.",
+      "inspect_with": {
+        "item": "magnifying_glass",
+        "puzzle": "clock_puzzle",
+        "clue": "door_second_half",
+        "success_text": "Through the magnifying glass you read the tiny engraving on the clock face: 'the end is 1 then 3'."
+      }
+    },
+    "door": {
+      "name": "oak door",
+      "aliases": [
+        "door",
+        "exit",
+        "oak door",
+        "keypad",
+        "exit door"
+      ],
+      "visible": true,
+      "description": "A heavy oak door with a four-digit keypad. It is the only way out.",
+      "opened_description": "The oak door stands wide open. Fresh air flows in.",
+      "lock": {
+        "type": "code",
+        "code": "5813",
+        "puzzle": "door_puzzle",
+        "requires_puzzles": [
+          "painting_puzzle",
+          "clock_puzzle"
+        ],
+        "escape": true,
+        "success_text": "The keypad flashes green. With a heavy clunk the oak door swings open. You have escaped the Forgotten Library!",
+        "revealed_by_clues": [
+          "door_first_half",
+          "door_second_half"
+        ]
+      }
+    }
+  },
+  "clues": {
+    "journal_hints": "Journal: the three red books hold the drawer code (read left to right); the stopped clock holds the end of the exit code.",
+    "drawer_code": "The red books show 4, 7, 2.",
+    "note_hint": "The torn note says the beginning of the exit code is behind the portrait.",
+    "door_first_half": "Behind the portrait: 5 and 8.",
+    "door_second_half": "Clock engraving: 1 then 3."
+  },
+  "hints": [
+    {
+      "until_puzzle": "drawer_puzzle",
+      "text": "The bookshelf and the desk both deserve a closer look."
+    },
+    {
+      "until_puzzle": "painting_puzzle",
+      "text": "Something you found in the drawer might fit a very small keyhole."
+    },
+    {
+      "until_puzzle": "clock_puzzle",
+      "text": "Tiny engravings need a tool to read."
+    },
+    {
+      "until_puzzle": "door_puzzle",
+      "text": "Put the beginning and the end of the code together and try the keypad."
+    }
+  ]
+}
